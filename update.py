@@ -56,7 +56,7 @@ def fetch(retailer):
     products=[]; page=1
     while True:
         qs=urllib.parse.urlencode({'retailer':retailer,'page':page,'page_size':100})
-        req=urllib.request.Request(f'{BASE}?{qs}',headers={'User-Agent':'PatjesKoopjeskrant/0.1 (+https://github.com/PrijsProfeet/supermarkt-api)','Accept':'application/json'})
+       req=urllib.request.Request(f'{BASE}?{qs}',headers={'User-Agent':'PatjesKoopjeskrant/0.1 (+https://github.com/vrolijkepatrick/Patjes-Koopjeskrant)','Accept':'application/json','X-API-Key':os.environ['PRIJSPROFEET_API_KEY']})
         with urllib.request.urlopen(req,timeout=35) as resp: data=json.load(resp)
         rows=data if isinstance(data,list) else next((data[k] for k in ('products','items','results','data','promotions') if isinstance(data.get(k),list)),None)
         if rows is None: raise ValueError(f'Onbekend API formaat voor {retailer}: {list(data)[:10]}')
